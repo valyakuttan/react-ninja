@@ -1,28 +1,42 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import Ninja from './Ninja'
+import AddNinja from './AddNinja'
 
 class App extends Component {
-  render() {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      ninjas: []
+    }
+  }
+
+  addNinja = (ninja) => {
+    const ninjas = [...this.state.ninjas, ninja]
+    this.setState({
+      ninjas: ninjas
+    })
+  }
+
+  deleteNinja = (id) => {
+    const ninjas = [...this.state.ninjas]
+    ninjas[id] = null
+    this.setState({
+      ninjas: ninjas.filter((n) => n !== null)
+    })
+
+  }
+
+  render () {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className='react-ninja'>
+        <div>Hello Ninja</div>
+        <Ninja deleteNinja={this.deleteNinja}
+               ninjas={this.state.ninjas} />
+        <AddNinja addNinja={this.addNinja} />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
