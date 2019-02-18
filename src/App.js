@@ -1,39 +1,29 @@
 import React, { Component } from 'react'
-import Ninja from './Ninja'
-import AddNinja from './AddNinja'
+import Todos from './Todos'
 
 class App extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      ninjas: []
+      todos: [
+        { id: 1, content: 'buy some milk' },
+        { id: 2, content: 'go rock' }
+      ]
     }
   }
 
-  addNinja = (ninja) => {
-    const ninjas = [...this.state.ninjas, ninja]
+  deleteTodo = (id) => {
     this.setState({
-      ninjas: ninjas
+      todos: this.state.todos.filter((todo) => todo.id !== id)
     })
   }
-
-  deleteNinja = (id) => {
-    const ninjas = [...this.state.ninjas]
-    ninjas[id] = null
-    this.setState({
-      ninjas: ninjas.filter((n) => n !== null)
-    })
-
-  }
-
   render () {
     return (
-      <div className='react-ninja'>
-        <div>Hello Ninja</div>
-        <Ninja deleteNinja={this.deleteNinja}
-               ninjas={this.state.ninjas} />
-        <AddNinja addNinja={this.addNinja} />
+      <div className='todo-app container'>
+        <h1 className='center blue-text'>Todo's</h1>
+        <Todos todos={this.state.todos}
+               deleteTodo={this.deleteTodo} />
       </div>
     )
   }
